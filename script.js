@@ -31,7 +31,8 @@ screens = prompt("Какие типы экранов нужно разработ
 screenPrice = prompt("Сколько будет стоить данная работа?", "12000");
 
 // через !!prompt при ненулевом значении выводит всегда true, поэтому сделал вот такую проверку
-adaptive = prompt("Нужен ли адаптив на сайте?", "true/false") === "true";
+// adaptive = prompt("Нужен ли адаптив на сайте?", "true/false") === "true"; Перемудрил немного, забыл что есть confirm
+adaptive = confirm("Нужен ли адаптив на сайте?")
 
 console.log(adaptive);
 
