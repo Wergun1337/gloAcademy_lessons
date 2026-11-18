@@ -1,62 +1,72 @@
-let title = "lesson02";
-let screens = "Простые, Сложные, Интерактивные";
-let screenPrice = 322;
-let rollback = 12;
-let fullPrice = 1337;
-let adaptive = true;
+'use strict';
 
-// определение типов
-console.log(typeof title);
-console.log(typeof fullPrice);
-console.log(typeof adaptive);
-
-// длинна строки
-console.log(screens.length);
-
-// вывод переменных внутри строки
-console.log(`Стоимость верстки экранов ${screenPrice} рублей / долларов / гривен / юани`);
-console.log(`Стоимость разработки сайта ${fullPrice} рублей / долларов / гривен / юани`);
-
-// нижний регистр + создание массива
-console.log(screens.toLocaleLowerCase().split(","));
-
-// вывод вычислительных операций внутри console.log()
-console.log("Процент отката посреднику за работу: " + fullPrice * (rollback / 100));
-
-
-// lesson 03
-
-title = prompt("Как называется ваш проект?");
-screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные, Интерактивные");
-screenPrice = prompt("Сколько будет стоить данная работа?", "12000");
-
-// через !!prompt при ненулевом значении выводит всегда true, поэтому сделал вот такую проверку
-adaptive = prompt("Нужен ли адаптив на сайте?", "true/false") === "true";
-
-console.log(adaptive);
-
+const rollback = 12;
+let title = prompt("Как называется ваш проект?");
+let screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные, Интерактивные");
+let screenPrice = prompt("Сколько будет стоить данная работа?", "12000");
+let adaptive = confirm("Нужен ли адаптив на сайте?");
 let service1 = prompt("Какой дополнительный тип услуги нужен?");
 let servicePrice1 = prompt("Сколько это будет стоить?", "0");
-
 let service2 = prompt("Какой дополнительный тип услуги нужен?");
 let servicePrice2 = prompt("Сколько это будет стоить?", "0");
 
-fullPrice = parseInt(screenPrice) + parseInt(servicePrice1) + parseInt(servicePrice2);
+// определение типа
+const showTypeOf = function (variable) {
+    console.log(variable, typeof (variable))
+}
 
-let servicePercentPrice = Math.ceil(fullPrice - fullPrice * (rollback / 100));
+// сообщение о скидке 
+
+const getRollbackMessage = function (price) {
+    switch (true) {
+        case price >= 30000:
+            console.log("Даем скидку в 10%")
+            break
+        case price >= 15000:
+            console.log("Даем скидку в 5%")
+            break
+        case price >= 0:
+            console.log("Скидка не предусмотрена")
+            break
+        default:
+            console.log("Что то пошло не так")
+    };
+};
+
+//сумма доп услуг 
+const getAllServicePrices = function () {
+    return Number(servicePrice1) + Number(servicePrice2);
+};
+
+let allServicePrices = getAllServicePrices();
+
+// полная стоимость
+function getFullPrice() {
+    return Number(screenPrice) + allServicePrices;
+};
+let fullPrice = getFullPrice();
+
+const getTitle = function () {
+    let lowercaseTitle = title.trimStart().toLowerCase();
+    return lowercaseTitle.charAt(0).toUpperCase() + lowercaseTitle.slice(1)
+};
+
+title = getTitle();
+
+const getServicePercentPrices = function () {
+    return Math.ceil(fullPrice - fullPrice * (rollback / 100));
+};
+
+let servicePercentPrice = getServicePercentPrices();
+
+
+showTypeOf(title);
+showTypeOf(screenPrice);
+showTypeOf(adaptive);
+getRollbackMessage(fullPrice);
+
+// не очень понял с выводом экранов 
+// console.log(screens.toLocaleLowerCase().split(","));
+console.log(screens);
 
 console.log(servicePercentPrice);
-
-switch (true) {
-    case fullPrice >= 30000:
-        console.log("Даем скидку в 10%")
-        break
-    case fullPrice >= 15000 && fullPrice < 30000:
-        console.log("Даем скидку в 5%")
-        break
-    case fullPrice >= 0 && fullPrice < 15000:
-        console.log("Скидка не предусмотрена")
-        break
-    default:
-        console.log("Что то пошло не так")
-};
